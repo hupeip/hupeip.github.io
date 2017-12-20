@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言JavaScript数组的迭代方法，前端开发人员想必都不陌生了，在开发中基本上都会用上其中的一种或是几种，说起迭代方法，可能很多人首先想到的就是for循环，我之前遍历数组的时候用的最多的就是for，但是在开始使用的迭代方法之后，就很少使用for循环进行数组操作了，我最常用的是 map和foreach ，也会使用ev">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数组的操作-迭代方法">
+<meta property="og:url" content="https://hupeip.github.io/2017/11/19/数组的操作-迭代方法/index.html">
+<meta property="og:site_name" content="Web前端">
+<meta property="og:description" content="前言JavaScript数组的迭代方法，前端开发人员想必都不陌生了，在开发中基本上都会用上其中的一种或是几种，说起迭代方法，可能很多人首先想到的就是for循环，我之前遍历数组的时候用的最多的就是for，但是在开始使用的迭代方法之后，就很少使用for循环进行数组操作了，我最常用的是 map和foreach ，也会使用every和some，如果使用得当，不仅可以减少代码冗余，提升可读性和可维护性，也可">
+<meta property="og:updated_time" content="2017-11-19T14:20:41.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数组的操作-迭代方法">
+<meta name="twitter:description" content="前言JavaScript数组的迭代方法，前端开发人员想必都不陌生了，在开发中基本上都会用上其中的一种或是几种，说起迭代方法，可能很多人首先想到的就是for循环，我之前遍历数组的时候用的最多的就是for，但是在开始使用的迭代方法之后，就很少使用for循环进行数组操作了，我最常用的是 map和foreach ，也会使用every和some，如果使用得当，不仅可以减少代码冗余，提升可读性和可维护性，也可">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://hupeip.github.io/2017/11/19/数组的操作-迭代方法/"/>
+
+
+
+
+
+  <title>数组的操作-迭代方法 | Web前端</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Web前端</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">前端，技术，生活的艺术</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Startseite
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            Über
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Kategorien
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archiv
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hupeip.github.io/2017/11/19/数组的操作-迭代方法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hupei">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Web前端">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">数组的操作-迭代方法</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-11-19T13:07:02+08:00">
+                2017-11-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>JavaScript数组的迭代方法，前端开发人员想必都不陌生了，在开发中基本上都会用上其中的一种或是几种，说起迭代方法，可能很多人首先想到的就是for循环，我之前遍历数组的时候用的最多的就是for，但是在开始使用的迭代方法之后，就很少使用for循环进行数组操作了，我最常用的是 <font color="#A52A2A">map和foreach</font> ，也会使用<font color="#A52A2A">every和some</font>，如果使用得当，<font color="#A52A2A" size="3">不仅可以减少代码冗余，提升可读性和可维护性，也可以在一定程度上优化性能。</font></p>
+<p>es5新增了几个数组的迭代方法（every,filter,forEach,map,some），好了，废话不多说，下面开始进入到我们的正题，介绍各个方法的使用情况。<br>参数：这些方法都接收两个参数callback是数组每一项执行的那个指定函数，使用三个参数，thisArg（可选，执行 callback 函数时 使用的this 值）callback参数如下 </p>
+<ul>
+<li>currentValue，第一个参数，数组中正在处理的当前元素</li>
+<li>index，第二个参数，数组中正在处理的当前元素的索引 （可选）</li>
+<li>array，方法被调用的数组（可选）</li>
+</ul>
+<h4 id="1-map方法"><a href="#1-map方法" class="headerlink" title="1.map方法"></a>1.map方法</h4><p>为数组每一项执行一个指定函数，返回每次函数调用的结果组成的数组。这个是我使用的最多的，eg: 在react中循环输出组件 </p>
+<h5 id="试想一下，现在有一个需求，给定一个数组，然后给数组里面的每一项加1"><a href="#试想一下，现在有一个需求，给定一个数组，然后给数组里面的每一项加1" class="headerlink" title="??? 试想一下，现在有一个需求，给定一个数组，然后给数组里面的每一项加1"></a>??? 试想一下，现在有一个需求，给定一个数组，然后给数组里面的每一项加1</h5><p>我们先来看下for循环是怎么实现的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">let array = [3, 6, 12, 33, 52]  </span><br><span class="line">for(let i = 0; i &lt; array.length; i++) &#123;</span><br><span class="line">    array[i] += 1</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>map方法实现<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">array = array.map(function(item) &#123;return item + 1&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>map的es6写法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">array = array.map(item =&gt; item + 1)</span><br></pre></td></tr></table></figure></p>
+<h4 id="2-forEach方法"><a href="#2-forEach方法" class="headerlink" title="2.forEach方法"></a>2.forEach方法</h4><p>forEach()对数组中的每一项运行给定函数 ;简单点来说，本质上跟for没有区别，只是写法不一样。 它的使用也和map类似，参数也类似，只是这个方法没有返回值。这个方法比较简单，只说一些注意的点吧：</p>
+<ul>
+<li>forEach和map一样，如果数组在迭代时被修改了，则其他元素会被跳过，看下面一个例子<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">let words = [&quot;one&quot;, &quot;two&quot;, &quot;three&quot;, &quot;four&quot;];</span><br><span class="line">words.forEach((word) =&gt; &#123;</span><br><span class="line">  console.log(word);</span><br><span class="line">  if (word === &quot;two&quot;) &#123;</span><br><span class="line">    words.shift();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line">// one</span><br><span class="line">// two</span><br><span class="line">// four</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>当word=“two”时，删掉数组的第一个元素，那么数组的每一项都会往前移动一个位置，因为元素 “four”现在在数组更前的位置，”three”会被跳过。 forEach()不会在迭代之前创建数组的副本。</p>
+<ul>
+<li>forEach没有办法中止或者跳出循环，除非抛出一个异常。</li>
+</ul>
+<h4 id="3-filter方法"><a href="#3-filter方法" class="headerlink" title="3.filter方法"></a>3.filter方法</h4><p>filter():对数组中的每一项运行给定函数。该函数会返回true的项组成的数组。</p>
+<h5 id="筛选出分数大于60分的同学。"><a href="#筛选出分数大于60分的同学。" class="headerlink" title="筛选出分数大于60分的同学。"></a>筛选出分数大于60分的同学。</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">let stu = [</span><br><span class="line">    &#123;</span><br><span class="line">        name: &apos;mabiao&apos;,</span><br><span class="line">        score: 43,</span><br><span class="line">        flower: 3</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        name: &apos;haohua&apos;,</span><br><span class="line">        score: 87,</span><br><span class="line">        flower: 2</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        name: &apos;dahuang&apos;,</span><br><span class="line">        score: 74,</span><br><span class="line">        flower: 4</span><br><span class="line">    &#125;,</span><br><span class="line">]</span><br><span class="line">let qua_stu = stu.filter(item =&gt; item.score &gt;= 60)</span><br><span class="line">console.log(qua_stu)</span><br></pre></td></tr></table></figure>
+<p>还有一个应用是数组去重，用filter也是比较容易实现的。eg:<br>先来看看for循环是怎么实现的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var newarr = [],</span><br><span class="line">    arr = [&apos;hello&apos;, &apos;hi&apos;, &apos;world&apos;, &apos;hello&apos;, &apos;apple&apos;, &apos;world&apos;, &apos;dream&apos;]</span><br><span class="line">for(var i = 0,len = arr.length;i &lt; len; i++)&#123;</span><br><span class="line">    if(newarr.indexOf(arr[i])===-1)&#123;</span><br><span class="line">        newarr.push(arr[i]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>再来对比一下filter，是不是精简了很多。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">newarr = arr.filter((item,index,self) =&gt; &#123;</span><br><span class="line">    return self.indexOf(item) == index</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<h4 id="4-Every和Some"><a href="#4-Every和Some" class="headerlink" title="4.Every和Some"></a>4.Every和Some</h4><p>因为这两个方法的使用场景很像，所以就一起写了。<br>every()对数组中的每一项运行给定函数，如果该函数对每一项都返回true，则返回true;<br>some()对数组中的每一项运行给定函数，如果该函数对任一项返回true，则返回true;<br>every相当于并且，some相当于或  </p>
+<h5 id="检测数组中的所有元素是否都大于-10"><a href="#检测数组中的所有元素是否都大于-10" class="headerlink" title="检测数组中的所有元素是否都大于 10"></a>检测数组中的所有元素是否都大于 10</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">let arr = [12, 5, 8, 13, 44]</span><br><span class="line">var passed = arr.every((item) =&gt; item &gt; 10)</span><br><span class="line">console.log(passed) // false</span><br></pre></td></tr></table></figure>
+<h5 id="检测在数组中是否有元素大于-10"><a href="#检测在数组中是否有元素大于-10" class="headerlink" title="检测在数组中是否有元素大于 10"></a>检测在数组中是否有元素大于 10</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">passed = arr.some((item) =&gt; item &gt; 10)</span><br><span class="line">console.log(passed) //true</span><br></pre></td></tr></table></figure>
+<h3 id="补充-（es6新增的数组迭代方法）"><a href="#补充-（es6新增的数组迭代方法）" class="headerlink" title="补充 （es6新增的数组迭代方法）"></a>补充 （es6新增的数组迭代方法）</h3><h4 id="1-for-of"><a href="#1-for-of" class="headerlink" title="1.for-of"></a>1.for-of</h4><h5 id="介绍for-of之前，先来看看什么是Iterator（遍历器）以下摘至es6标准入门的Iterator，只有一部分定义，要了解更多的可以去看看可以去看阮大神的es6标准入门"><a href="#介绍for-of之前，先来看看什么是Iterator（遍历器）以下摘至es6标准入门的Iterator，只有一部分定义，要了解更多的可以去看看可以去看阮大神的es6标准入门" class="headerlink" title="介绍for of之前，先来看看什么是Iterator（遍历器）以下摘至es6标准入门的Iterator，只有一部分定义，要了解更多的可以去看看可以去看阮大神的es6标准入门"></a>介绍for of之前，先来看看什么是Iterator（遍历器）以下摘至es6标准入门的Iterator，只有一部分定义，要了解更多的可以去看看可以去看阮大神的<a href="http://es6.ruanyifeng.com/#docs/iterator" target="_blank" rel="noopener">es6标准入门</a></h5><ul>
+<li>JavaScript 原有的表示“集合”的数据结构，主要是数组（Array）和对象（Object），ES6 又添加了Map和Set。这样就有了四种数据集合，用户还可以组合使用它们，定义自己的数据结构，比如数组的成员是Map，Map的成员是对象。这样就需要一种统一的接口机制，来处理所有不同的数据结构。  </li>
+<li>遍历器（Iterator）就是这样一种机制。它是一种接口，为各种不同的数据结构提供统一的访问机制。任何数据结构只要部署 Iterator 接口，就可以完成遍历操作（即依次处理该数据结构的所有成员）。  </li>
+<li>Iterator 的作用有三个：一是为各种数据结构，提供一个统一的、简便的访问接口；二是使得数据结构的成员能够按某种次序排列；三是 ES6 创造了一种新的遍历命令for…of循环，Iterator 接口主要供for…of消费。</li>
+<li>那么问题来了，一个数据结构只要部署了<font color="#A52A2A">Symbol.iterator</font>属性，就被视为具有 iterator 接口，就可以用for…of循环遍历它的成员。也就是说，for…of循环内部调用的是数据结构的Symbol.iterator方法。</li>
+<li>for…of循环可以使用的范围包括数组、Set 和 Map 结构、某些类似数组的对象（比如arguments对象、DOM NodeList 对象）、Generator 对象，以及字符串。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">const arr = [&apos;red&apos;, &apos;green&apos;, &apos;blue&apos;];</span><br><span class="line"></span><br><span class="line">for(let v of arr) &#123;</span><br><span class="line">  console.log(v); // red green blue</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const obj = &#123;&#125;;</span><br><span class="line">obj[Symbol.iterator] = arr[Symbol.iterator].bind(arr);</span><br><span class="line"></span><br><span class="line">for(let v of obj) &#123;</span><br><span class="line">  console.log(v); // red green blue</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>空对象obj部署了数组arr的Symbol.iterator属性，结果obj的for…of循环，产生了与arr完全一样的结果。  </p>
+<p><font color="#c7254e">for in</font> 循环是获得键值，<font color="#c7254e">for of</font> 允许遍历获得值<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var arr = [&apos;a&apos;, &apos;b&apos;, &apos;c&apos;, &apos;d&apos;];</span><br><span class="line"></span><br><span class="line">for (let a in arr) &#123;</span><br><span class="line">  console.log(a); // 0 1 2 3</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">for (let a of arr) &#123;</span><br><span class="line">  console.log(a); // a b c d</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>for…of循环调用遍历器接口，数组的遍历器接口只返回具有数字索引的属性。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">let arr = [3, 5, 7];</span><br><span class="line">arr.foo = &apos;hello&apos;;</span><br><span class="line"></span><br><span class="line">for (let i of arr) &#123;</span><br><span class="line">  console.log(i); //  &quot;3&quot;, &quot;5&quot;, &quot;7&quot; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h5 id="好了，先介绍到这里，这里只是简单描述了数组迭代方法的使用，具体项目中的使用还需要大家亲自操刀实践，实践才能出真知，谢谢！！！"><a href="#好了，先介绍到这里，这里只是简单描述了数组迭代方法的使用，具体项目中的使用还需要大家亲自操刀实践，实践才能出真知，谢谢！！！" class="headerlink" title="好了，先介绍到这里，这里只是简单描述了数组迭代方法的使用，具体项目中的使用还需要大家亲自操刀实践，实践才能出真知，谢谢！！！"></a><font color="#A52A2A">好了，先介绍到这里，这里只是简单描述了数组迭代方法的使用，具体项目中的使用还需要大家亲自操刀实践，实践才能出真知，谢谢！！！<font></font></font></h5>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>感谢支持，我会不断进步</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/Wechat.jpeg" alt="hupei WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/19/hello-world/" rel="next" title="Hello">
+                <i class="fa fa-chevron-left"></i> Hello
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/19/牛刀小试--仿QQ上传头像功能/" rel="prev" title="牛刀小试--仿QQ上传头像功能">
+                牛刀小试--仿QQ上传头像功能 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="uyan_frame"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">hupei</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">Artikel</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-map方法"><span class="nav-number">1.1.</span> <span class="nav-text">1.map方法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#试想一下，现在有一个需求，给定一个数组，然后给数组里面的每一项加1"><span class="nav-number">1.1.1.</span> <span class="nav-text">??? 试想一下，现在有一个需求，给定一个数组，然后给数组里面的每一项加1</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-forEach方法"><span class="nav-number">1.2.</span> <span class="nav-text">2.forEach方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-filter方法"><span class="nav-number">1.3.</span> <span class="nav-text">3.filter方法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#筛选出分数大于60分的同学。"><span class="nav-number">1.3.1.</span> <span class="nav-text">筛选出分数大于60分的同学。</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-Every和Some"><span class="nav-number">1.4.</span> <span class="nav-text">4.Every和Some</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#检测数组中的所有元素是否都大于-10"><span class="nav-number">1.4.1.</span> <span class="nav-text">检测数组中的所有元素是否都大于 10</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#检测在数组中是否有元素大于-10"><span class="nav-number">1.4.2.</span> <span class="nav-text">检测在数组中是否有元素大于 10</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#补充-（es6新增的数组迭代方法）"><span class="nav-number">2.</span> <span class="nav-text">补充 （es6新增的数组迭代方法）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-for-of"><span class="nav-number">2.1.</span> <span class="nav-text">1.for-of</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#介绍for-of之前，先来看看什么是Iterator（遍历器）以下摘至es6标准入门的Iterator，只有一部分定义，要了解更多的可以去看看可以去看阮大神的es6标准入门"><span class="nav-number">2.1.1.</span> <span class="nav-text">介绍for of之前，先来看看什么是Iterator（遍历器）以下摘至es6标准入门的Iterator，只有一部分定义，要了解更多的可以去看看可以去看阮大神的es6标准入门</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#好了，先介绍到这里，这里只是简单描述了数组迭代方法的使用，具体项目中的使用还需要大家亲自操刀实践，实践才能出真知，谢谢！！！"><span class="nav-number">2.1.2.</span> <span class="nav-text">好了，先介绍到这里，这里只是简单描述了数组迭代方法的使用，具体项目中的使用还需要大家亲自操刀实践，实践才能出真知，谢谢！！！</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">hupei</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Erstellt mit  <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+
+    
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2152156"></script>
+      <!-- UY END -->
+    
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
