@@ -181,7 +181,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Startseite
+            Home
           </a>
         </li>
       
@@ -191,7 +191,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
             
-            Über
+            About
           </a>
         </li>
       
@@ -211,7 +211,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
-            Kategorien
+            Categories
           </a>
         </li>
       
@@ -221,7 +221,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archiv
+            Archives
           </a>
         </li>
       
@@ -244,6 +244,190 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hupeip.github.io/2018/03/20/Css Grid Layout(一)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hupei">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Web前端">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/20/Css Grid Layout(一)/" itemprop="url">CSS Grid Layout (一)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-20T21:34:50+08:00">
+                2018-03-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2018/03/20/Css Grid Layout(一)/#SOHUCS" itemprop="discussionUrl">
+                  <span id="url::https://hupeip.github.io/2018/03/20/Css Grid Layout(一)/" class="cy_cmt_count" data-xid="2018/03/20/Css Grid Layout(一)/" itemprop="commentsCount" ></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在介绍Grid之前，先来说一下flex吧，引用阮大神的一句话：2009年，W3C 提出了一种新的方案—-Flex 布局，可以简便、完整、响应式地实现各种页面布局。目前，它已经得到了所有浏览器的支持，这意味着，现在就能很安全地使用这项功能。在这几年，flex布局已然成为前端的主流布局框架，每一个前端开发者都必须要掌握flexbox的用法。<br>然而，在2017年，Grid来势汹汹，声势浩大，相信大家就算没有在项目中使用过，也一定听过这个。Grid最大的特色，就是采用了二维布局，之前的布局方式都是采用一维布局。目前Grid的规范也逐渐完善，flex和grid各有千秋，日后这个后起之秀会不会成为web布局的扛把子，谁也说不准。</p>
+<p>下面，就来介绍下本文的主角 <font color="#A52A2A">Grid</font></p>
+<h3 id="简介已经支持情况"><a href="#简介已经支持情况" class="headerlink" title="简介已经支持情况"></a>简介已经支持情况</h3><h4 id="Grid简介"><a href="#Grid简介" class="headerlink" title="Grid简介"></a>Grid简介</h4><p>Grid：CSS网格布局（又名“网格”）是一个二维的基于网格的布局系统，其目的只在于完全改变我们设计基于网格的用户界面的方式。CSS一直用来布局网页，但一直都不完美。 一开始我们使用table 做布局，然后转向浮动、定位以及inline-block，但所有这些方法本质上都是 Hack 的方式，并且遗漏了很多重要的功能（例如垂直居中）。 Flexbox的出现在一定程度上解决了这个问题，但是它的目的是为了更简单的一维布局，而不是复杂的二维布局（Flexbox和Grid实际上一起工作得很好）。 只要我们一直在制作网站，我们就一直在为解决布局问题不断探索， 而Grid是第一个专门为解决布局问题而生的CSS模块。</p>
+<h4 id="浏览器支持情况"><a href="#浏览器支持情况" class="headerlink" title="浏览器支持情况"></a>浏览器支持情况</h4><p><img src="/images/llq.jpg" alt="浏览器支持情况ß"></p>
+<h3 id="Gird的基本概念"><a href="#Gird的基本概念" class="headerlink" title="Gird的基本概念"></a>Gird的基本概念</h3><h4 id="1-网格容器（Grid-Container），对应Flexbox布局中的Flex容器"><a href="#1-网格容器（Grid-Container），对应Flexbox布局中的Flex容器" class="headerlink" title="1.网格容器（Grid Container），对应Flexbox布局中的Flex容器"></a>1.网格容器（Grid Container），对应Flexbox布局中的Flex容器</h4><p>元素应用display:grid，它是其所有网格项的父元素。下面例子container就是网格容器。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;container&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;item item-1&quot;&gt;&lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;item item-2&quot;&gt;&lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;item item-3&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;/div&gt; </span><br><span class="line"></span><br><span class="line">.container &#123;</span><br><span class="line">    display: grid;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="2-网格项（Grid-Item）-对应Flexbox布局中的Flex项目"><a href="#2-网格项（Grid-Item）-对应Flexbox布局中的Flex项目" class="headerlink" title="2.网格项（Grid Item）, 对应Flexbox布局中的Flex项目"></a>2.网格项（Grid Item）, 对应Flexbox布局中的Flex项目</h4><p>网格容器的子元素，下面的item元素是网格项，但sub-item不是。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;container&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;item&quot;&gt;&lt;/div&gt; </span><br><span class="line">    &lt;div class=&quot;item&quot;&gt;</span><br><span class="line">        &lt;p class=&quot;sub-item&quot;&gt;&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;item&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure></p>
+<h4 id="3-网格线-Grid-lines"><a href="#3-网格线-Grid-lines" class="headerlink" title="3.网格线(Grid lines)"></a>3.网格线(Grid lines)</h4><p>网格线是用来在水平和垂直方向分割网格的线。水平方向的网格线是从左向右；垂直方向是从上往下。网格线的编号都是从1开始的。</p>
+<p><img src="https://www.w3cplus.com/sites/default/files/blogs/2016/1609/example-grid-lines.svg" alt="网格线"></p>
+<h4 id="4-网格轨道（Grid-Track）"><a href="#4-网格轨道（Grid-Track）" class="headerlink" title="4.网格轨道（Grid Track）"></a>4.网格轨道（Grid Track）</h4><p>两个相邻的网格线之间为网格轨道。你可以认为它们是网格的列或行。</p>
+<h4 id="5-网格单元（Grid-Cell）"><a href="#5-网格单元（Grid-Cell）" class="headerlink" title="5.网格单元（Grid Cell）"></a>5.网格单元（Grid Cell）</h4><p>两个相邻的列网格线和两个相邻的行网格线组成的是网格单元，它是最小的网格单元。</p>
+<h4 id="6-网格区（Grid-Area）"><a href="#6-网格区（Grid-Area）" class="headerlink" title="6.网格区（Grid Area）"></a>6.网格区（Grid Area）</h4><p>网格区是由任意数量网格单元组成。</p>
+<h3 id="父容器-Grid-Container-的属性"><a href="#父容器-Grid-Container-的属性" class="headerlink" title="父容器(Grid Container)的属性"></a>父容器(Grid Container)的属性</h3><h4 id="display"><a href="#display" class="headerlink" title="display"></a>display</h4><p>将元素定义为 grid contaienr，并为其内容建立新的网格格式化上下文(grid formatting context)。<br>属性值：  </p>
+<ul>
+<li>grid: 生成块级网格</li>
+<li>inline-grid: 生成行内网格</li>
+<li>subgrid: 如果网格容器本身是网格项grid item（嵌套网格容器），此属性用来继承其父网格容器的列、行大小。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.container &#123;</span><br><span class="line">    display: grid | inline-grid | subgrid;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意：column, float, clear, 以及 vertical-align 对一个 grid container 没有影响</p>
+<h4 id="grid-template-columns-grid-template-rows-网格列和网格行"><a href="#grid-template-columns-grid-template-rows-网格列和网格行" class="headerlink" title="grid-template-columns / grid-template-rows (网格列和网格行)"></a>grid-template-columns / grid-template-rows (网格列和网格行)</h4><p>使用以空格分隔的多个值来定义网格的列和行。这些值表示轨道大小，它们之间的空格代表表格线。当你设置行或列大小为auto时，网格会自动分配空间和网格线名称<br>eg:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">// 基本用法</span><br><span class="line">.container &#123;</span><br><span class="line">    grid-template-columns: 40px 50px auto 50px 40px;</span><br><span class="line">    grid-template-rows: 25% 100px auto;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 可以给每条网格线命名</span><br><span class="line">.container &#123;</span><br><span class="line">    grid-template-columns: [first] 40px [line2] 50px [line3] auto [col4-start] 50px [five] 40px [end];</span><br><span class="line">    grid-template-rows: [row1-start] 25% [row1-end] 100px [third-line] auto [last-line];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"> // 每条网格线也可以不止一个名字</span><br><span class="line">.container &#123;</span><br><span class="line">    grid-template-columns: [first] 40px [line2] 50px [line3] auto [col4-start] 50px [five] 40px [end];</span><br><span class="line">    grid-template-rows: [row1-start] 25% [row1-end row2-start] 100px [third-line] auto [last-line];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 如果有重复的部分，可以使用repeat函数</span><br><span class="line">.container &#123;</span><br><span class="line">    grid-template-columns: repeat(3, 30px [col]) 40px;</span><br><span class="line">&#125;</span><br><span class="line">等价于</span><br><span class="line">.container &#123;</span><br><span class="line">    30px [col] 30px [col] 30px [col] 40px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://cloud.hunger-valley.com/18-1-18/39647772.jpg" alt=""></p>
+<p>可以使用fr单位可以将容器分为几等份，如果和实际值一起用，则代表分割剩余的部分，例如下面分成三等份</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">.container&#123;</span><br><span class="line">    display:grid;</span><br><span class="line">    grid-template-columns: 1fr 1fr 1fr;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.container&#123;</span><br><span class="line">    display:grid;</span><br><span class="line">    grid-template-columns: 1fr 100px 1fr 1fr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="网格项的属性"><a href="#网格项的属性" class="headerlink" title="网格项的属性"></a>网格项的属性</h3><h4 id="网格项属性"><a href="#网格项属性" class="headerlink" title="网格项属性"></a>网格项属性</h4><ul>
+<li>grid-column-start：设置网格项目垂直方向的开始位置网格线</li>
+<li>grid-column-end：设置网格项目垂直方向的结束位置网格线</li>
+<li>grid-row-start：设置网格项目水平方向的开始位置网格线</li>
+<li>grid-row-end：设置网格项目水平方向的结束位置网格线</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">&lt;section class=&quot;grid-1&quot;&gt;  </span><br><span class="line">    &lt;div class=&quot;item-1&quot;&gt;1&lt;/div&gt;  </span><br><span class="line">    &lt;div class=&quot;item-2&quot;&gt;2&lt;/div&gt;  </span><br><span class="line">    &lt;div class=&quot;item-3&quot;&gt;3&lt;/div&gt;  </span><br><span class="line">    &lt;div class=&quot;item-4&quot;&gt;4&lt;/div&gt;  </span><br><span class="line">    &lt;div class=&quot;item-5&quot;&gt;5&lt;/div&gt;  </span><br><span class="line">    &lt;div class=&quot;item-6&quot;&gt;6&lt;/div&gt;</span><br><span class="line">&lt;/section&gt;</span><br><span class="line"></span><br><span class="line">.grid-1 &#123;</span><br><span class="line">    display: grid;</span><br><span class="line">    width: 100%;</span><br><span class="line">    max-width: 600px;</span><br><span class="line">    margin: 0 auto;</span><br><span class="line">    grid-template-columns: 300px 200px 100px;</span><br><span class="line">    grid-template-rows: 100px 50px;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.item-2 &#123;</span><br><span class="line">  grid-column-start: 2;</span><br><span class="line">  grid-column-end: 4;</span><br><span class="line">  grid-row-start: 1;</span><br><span class="line">  grid-row-end: 2;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 两个属性缩写</span><br><span class="line">item-2 &#123;</span><br><span class="line">    grid-column: 2 / 4;</span><br><span class="line">    grid-row: 1 / 2;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 四个属性缩写</span><br><span class="line">grid-row-start / grid-column-start/ grid-row-end / grid-column-end</span><br><span class="line">item-2 &#123;</span><br><span class="line">    grid-area: 1 / 2 / 2 / 4;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="/images/Grid.jpg" alt="&#39;结果&#39;"></p>
+<h4 id="合并单元格"><a href="#合并单元格" class="headerlink" title="合并单元格"></a>合并单元格</h4><p>其实上面的例子中已经实现了两个单元格合并（第二列和第三列），其实在Grid布局中提供了一个<font color="#A52A2A">span关键词</font>来实现单元格的跨越，span 后面跟的数字表示跨越多少个单元格。类似于table中的合并单元格，比如colspan合并列，rowspan合并行。</p>
+<p>注意：如果没有设置grid-column-end或grid-row-end，默认将跨越一个轨道。项目也可以重叠，设置z-index来确定堆叠顺序。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// 等价与上面的合并第二列和第三列</span><br><span class="line">.item-2 &#123; </span><br><span class="line">    grid-column: 2 / span 2; </span><br><span class="line">    grid-row: 1; </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">或者</span><br><span class="line">.item-2 &#123; </span><br><span class="line">    grid-area: 2 / 1 / span 2;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="单个网格项垂直于列网格线的对齐方式"><a href="#单个网格项垂直于列网格线的对齐方式" class="headerlink" title="单个网格项垂直于列网格线的对齐方式"></a>单个网格项垂直于列网格线的对齐方式</h4><p>属性值：</p>
+<ul>
+<li>start: 网格区域左对齐。</li>
+<li>end: 网格区域右对齐。</li>
+<li>center: 网格区域居中。</li>
+<li>stretch: 网格区域填满。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.item-1&#123;</span><br><span class="line">    justify-self: start | end | center | stretch;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>也可以给父容器设置justify-items，达到全部网格项对齐</p>
+<h4 id="单个网格项垂直于列网格线的对齐方式-1"><a href="#单个网格项垂直于列网格线的对齐方式-1" class="headerlink" title="单个网格项垂直于列网格线的对齐方式"></a>单个网格项垂直于列网格线的对齐方式</h4><p>属性值：</p>
+<ul>
+<li>start: 网格区域顶部对齐。</li>
+<li>end: 网格区域底部对齐。</li>
+<li>center: 网格区域居中。</li>
+<li>stretch: 网格区域填满。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.item-1&#123;</span><br><span class="line">    align-self: start | end | center | stretch;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>也可以在容器上设置align-items，达到全部网格项对齐</p>
+<p>未完待续…</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
     
       
 
@@ -287,7 +471,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-14T20:17:43+08:00">
                 2018-01-14
@@ -380,7 +564,7 @@
 </tbody>
 </table>
 <h4 id="test-compiler-js"><a href="#test-compiler-js" class="headerlink" title="test/compiler.js"></a>test/compiler.js</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">import path from &apos;path&apos;;</span><br><span class="line">import webpack from &apos;webpack&apos;;</span><br><span class="line">import memoryfs from &apos;memory-fs&apos;;</span><br><span class="line"></span><br><span class="line">export default (fixture, options = &#123;&#125;) =&gt; &#123;</span><br><span class="line">    const compiler = webpack(&#123;</span><br><span class="line">        context: __dirname,</span><br><span class="line">        entry: `./$&#123;fixture&#125;`,</span><br><span class="line">        output: &#123;</span><br><span class="line">            path: path.resolve(__dirname),</span><br><span class="line">            filename: &apos;bundle.js&apos;,</span><br><span class="line">        &#125;,</span><br><span class="line">        module: &#123;</span><br><span class="line">            rules: [&#123;</span><br><span class="line">                test: /\.xls.?$/,</span><br><span class="line">                loader: path.resolve(__dirname, &apos;../src/index&apos;),</span><br><span class="line">                options</span><br><span class="line">            &#125;]</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    compiler.outputFileSystem = new memoryfs();</span><br><span class="line"></span><br><span class="line">    return new Promise((resolve, reject) =&gt; &#123;</span><br><span class="line">        compiler.run((err, stats) =&gt; &#123;</span><br><span class="line">            if (err) reject(err);</span><br><span class="line"></span><br><span class="line">            resolve(stats);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="最后，我们来编写测试，并且添加-npm-script-运行它。"><a href="#最后，我们来编写测试，并且添加-npm-script-运行它。" class="headerlink" title="最后，我们来编写测试，并且添加 npm script 运行它。"></a>最后，我们来编写测试，并且添加 npm script 运行它。</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">import compiler from &apos;./compiler&apos;;</span><br><span class="line"></span><br><span class="line">test(&apos;getSingle&apos;, async () =&gt; &#123;</span><br><span class="line">  const stats = await compiler(&apos;example.xlsx&apos;, &#123;sheet: &apos;sheet1&apos;&#125;);</span><br><span class="line">  const output = stats.toJson().modules[0].source;</span><br><span class="line">  expect(output).toBe(`export default [&#123;&quot;id&quot;:&quot;1&quot;,&quot;name&quot;:&quot;Jack&quot;,&quot;age&quot;:&quot;20&quot;&#125;,&#123;&quot;id&quot;:&quot;2&quot;,&quot;name&quot;:&quot;Tom&quot;,&quot;age&quot;:&quot;18&quot;&#125;]`);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">test(&apos;getAll&apos;, async () =&gt; &#123;</span><br><span class="line">  const stats = await compiler(&apos;example.xlsx&apos;);</span><br><span class="line">  const output = stats.toJson().modules[0].source;</span><br><span class="line">  expect(output).toBe(`export default [&#123;&quot;sheet&quot;:&quot;sheet1&quot;,&quot;data&quot;:[&#123;&quot;id&quot;:&quot;1&quot;,&quot;name&quot;:&quot;Jack&quot;,&quot;age&quot;:&quot;20&quot;&#125;,&#123;&quot;id&quot;:&quot;2&quot;,&quot;name&quot;:&quot;Tom&quot;,&quot;age&quot;:&quot;18&quot;&#125;]&#125;,&#123;&quot;sheet&quot;:&quot;sheet2&quot;,&quot;data&quot;:[&#123;&quot;id&quot;:&quot;1&quot;,&quot;name&quot;:&quot;Jack&quot;,&quot;age&quot;:&quot;20&quot;&#125;,&#123;&quot;id&quot;:&quot;2&quot;,&quot;name&quot;:&quot;Tom&quot;,&quot;age&quot;:&quot;18&quot;&#125;]&#125;]`);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h4 id="最后，我们来编写测试，并且添加-npm-script-运行它。"><a href="#最后，我们来编写测试，并且添加-npm-script-运行它。" class="headerlink" title="最后，我们来编写测试，并且添加 npm script 运行它。"></a>最后，我们来编写测试，并且添加 npm script 运行它。</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">import compiler from &apos;./compiler&apos;;</span><br><span class="line"></span><br><span class="line">test(&apos;getSingle&apos;, async () =&gt; &#123;</span><br><span class="line">  const stats = await compiler(&apos;example.xlsx&apos;, &#123;sheet: &apos;sheet1&apos;&#125;);</span><br><span class="line">  const output = stats.toJson().modules[0].source;</span><br><span class="line">  expect(output).toBe(`export default [&#123;&quot;id&quot;:&quot;1&quot;,&quot;name&quot;:&quot;Jack&quot;,&quot;age&quot;:&quot;20&quot;&#125;,&#123;&quot;id&quot;:&quot;2&quot;,&quot;name&quot;:&quot;Tom&quot;,&quot;age&quot;:&quot;18&quot;&#125;]`);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">test(&apos;getAll&apos;, async () =&gt; &#123;</span><br><span class="line">  const stats = await compiler(&apos;example.xlsx&apos;);</span><br><span class="line">  const output = stats.toJson().modules[0].source;</span><br><span class="line">  expect(output).toBe(`export default [&#123;&quot;sheet&quot;:&quot;sheet1&quot;,&quot;data&quot;:[&#123;&quot;id&quot;:&quot;1&quot;,&quot;name&quot;:&quot;Jack&quot;,&quot;age&quot;:&quot;20&quot;&#125;,&#123;&quot;id&quot;:&quot;2&quot;,&quot;name&quot;:&quot;Tom&quot;,&quot;age&quot;:&quot;18&quot;&#125;]&#125;, &#123;&quot;sheet&quot;:&quot;sheet2&quot;,&quot;data&quot;:[&#123;&quot;id&quot;:&quot;1&quot;,&quot;name&quot;:&quot;Jack&quot;,&quot;age&quot;:&quot;20&quot;&#125;,&#123;&quot;id&quot;:&quot;2&quot;,&quot;name&quot;:&quot;Tom&quot;,&quot;age&quot;:&quot;18&quot;&#125;]&#125;]`);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 <h3 id="thank-you"><a href="#thank-you" class="headerlink" title="thank you"></a>thank you</h3>
           
         
@@ -458,7 +642,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-19T21:34:03+08:00">
                 2017-12-19
@@ -745,7 +929,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-11-19T13:07:02+08:00">
                 2017-11-19
@@ -913,7 +1097,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-11-19T00:10:47+08:00">
                 2017-11-19
@@ -1057,8 +1241,8 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">4</span>
-                  <span class="site-state-item-name">Artikel</span>
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">posts</span>
                 </a>
               </div>
             
@@ -1110,7 +1294,7 @@
 </div>
 
 
-  <div class="powered-by">Erstellt mit  <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
 
 
 

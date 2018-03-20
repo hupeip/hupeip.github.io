@@ -79,13 +79,13 @@
 
 
 
-<meta name="description" content="介绍loader 用于对模块的源代码进行转换。loader 可以使你在 import 或”加载”模块时预处理文件。因此，loader 类似于其他构建工具中“任务(task)”，并提供了处理前端构建步骤的强大方法。loader 可以将文件从不同的语言（如 TypeScript）转换为 JavaScript，或将内联图像转">
+<meta name="description" content="介绍loader 用于对模块的源代码进行转换。loader 可以使你在 import 或”加载”模块时预处理文件。因此，loader 类似于其他构建工具中“任务(task)”，并提供了处理前端构建步骤的强大方法。loader 可以将文件从不同的语言（如 TypeScript）转换为 JavaScript，或将内联图像转换为 data URL。loader 甚至允许你直接在 JavaScript 模">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Webpack如何编写一个loader">
 <meta property="og:url" content="https://hupeip.github.io/2018/01/14/Webpack如何编写一个loader/index.html">
 <meta property="og:site_name" content="Web前端">
 <meta property="og:description" content="介绍loader 用于对模块的源代码进行转换。loader 可以使你在 import 或”加载”模块时预处理文件。因此，loader 类似于其他构建工具中“任务(task)”，并提供了处理前端构建步骤的强大方法。loader 可以将文件从不同的语言（如 TypeScript）转换为 JavaScript，或将内联图像转换为 data URL。loader 甚至允许你直接在 JavaScript 模">
-<meta property="og:updated_time" content="2018-01-16T16:12:31.000Z">
+<meta property="og:updated_time" content="2018-01-26T15:08:26.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Webpack如何编写一个loader">
 <meta name="twitter:description" content="介绍loader 用于对模块的源代码进行转换。loader 可以使你在 import 或”加载”模块时预处理文件。因此，loader 类似于其他构建工具中“任务(task)”，并提供了处理前端构建步骤的强大方法。loader 可以将文件从不同的语言（如 TypeScript）转换为 JavaScript，或将内联图像转换为 data URL。loader 甚至允许你直接在 JavaScript 模">
@@ -184,7 +184,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Startseite
+            Home
           </a>
         </li>
       
@@ -194,7 +194,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
             
-            Über
+            About
           </a>
         </li>
       
@@ -214,7 +214,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
-            Kategorien
+            Categories
           </a>
         </li>
       
@@ -224,7 +224,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archiv
+            Archives
           </a>
         </li>
       
@@ -288,7 +288,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-14T20:17:43+08:00">
                 2018-01-14
@@ -379,7 +379,7 @@
 </tbody>
 </table>
 <h4 id="test-compiler-js"><a href="#test-compiler-js" class="headerlink" title="test/compiler.js"></a>test/compiler.js</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">import path from &apos;path&apos;;</span><br><span class="line">import webpack from &apos;webpack&apos;;</span><br><span class="line">import memoryfs from &apos;memory-fs&apos;;</span><br><span class="line"></span><br><span class="line">export default (fixture, options = &#123;&#125;) =&gt; &#123;</span><br><span class="line">    const compiler = webpack(&#123;</span><br><span class="line">        context: __dirname,</span><br><span class="line">        entry: `./$&#123;fixture&#125;`,</span><br><span class="line">        output: &#123;</span><br><span class="line">            path: path.resolve(__dirname),</span><br><span class="line">            filename: &apos;bundle.js&apos;,</span><br><span class="line">        &#125;,</span><br><span class="line">        module: &#123;</span><br><span class="line">            rules: [&#123;</span><br><span class="line">                test: /\.xls.?$/,</span><br><span class="line">                loader: path.resolve(__dirname, &apos;../src/index&apos;),</span><br><span class="line">                options</span><br><span class="line">            &#125;]</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    compiler.outputFileSystem = new memoryfs();</span><br><span class="line"></span><br><span class="line">    return new Promise((resolve, reject) =&gt; &#123;</span><br><span class="line">        compiler.run((err, stats) =&gt; &#123;</span><br><span class="line">            if (err) reject(err);</span><br><span class="line"></span><br><span class="line">            resolve(stats);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="最后，我们来编写测试，并且添加-npm-script-运行它。"><a href="#最后，我们来编写测试，并且添加-npm-script-运行它。" class="headerlink" title="最后，我们来编写测试，并且添加 npm script 运行它。"></a>最后，我们来编写测试，并且添加 npm script 运行它。</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">import compiler from &apos;./compiler&apos;;</span><br><span class="line"></span><br><span class="line">test(&apos;getSingle&apos;, async () =&gt; &#123;</span><br><span class="line">  const stats = await compiler(&apos;example.xlsx&apos;, &#123;sheet: &apos;sheet1&apos;&#125;);</span><br><span class="line">  const output = stats.toJson().modules[0].source;</span><br><span class="line">  expect(output).toBe(`export default [&#123;&quot;id&quot;:&quot;1&quot;,&quot;name&quot;:&quot;Jack&quot;,&quot;age&quot;:&quot;20&quot;&#125;,&#123;&quot;id&quot;:&quot;2&quot;,&quot;name&quot;:&quot;Tom&quot;,&quot;age&quot;:&quot;18&quot;&#125;]`);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">test(&apos;getAll&apos;, async () =&gt; &#123;</span><br><span class="line">  const stats = await compiler(&apos;example.xlsx&apos;);</span><br><span class="line">  const output = stats.toJson().modules[0].source;</span><br><span class="line">  expect(output).toBe(`export default [&#123;&quot;sheet&quot;:&quot;sheet1&quot;,&quot;data&quot;:[&#123;&quot;id&quot;:&quot;1&quot;,&quot;name&quot;:&quot;Jack&quot;,&quot;age&quot;:&quot;20&quot;&#125;,&#123;&quot;id&quot;:&quot;2&quot;,&quot;name&quot;:&quot;Tom&quot;,&quot;age&quot;:&quot;18&quot;&#125;]&#125;,&#123;&quot;sheet&quot;:&quot;sheet2&quot;,&quot;data&quot;:[&#123;&quot;id&quot;:&quot;1&quot;,&quot;name&quot;:&quot;Jack&quot;,&quot;age&quot;:&quot;20&quot;&#125;,&#123;&quot;id&quot;:&quot;2&quot;,&quot;name&quot;:&quot;Tom&quot;,&quot;age&quot;:&quot;18&quot;&#125;]&#125;]`);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h4 id="最后，我们来编写测试，并且添加-npm-script-运行它。"><a href="#最后，我们来编写测试，并且添加-npm-script-运行它。" class="headerlink" title="最后，我们来编写测试，并且添加 npm script 运行它。"></a>最后，我们来编写测试，并且添加 npm script 运行它。</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">import compiler from &apos;./compiler&apos;;</span><br><span class="line"></span><br><span class="line">test(&apos;getSingle&apos;, async () =&gt; &#123;</span><br><span class="line">  const stats = await compiler(&apos;example.xlsx&apos;, &#123;sheet: &apos;sheet1&apos;&#125;);</span><br><span class="line">  const output = stats.toJson().modules[0].source;</span><br><span class="line">  expect(output).toBe(`export default [&#123;&quot;id&quot;:&quot;1&quot;,&quot;name&quot;:&quot;Jack&quot;,&quot;age&quot;:&quot;20&quot;&#125;,&#123;&quot;id&quot;:&quot;2&quot;,&quot;name&quot;:&quot;Tom&quot;,&quot;age&quot;:&quot;18&quot;&#125;]`);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">test(&apos;getAll&apos;, async () =&gt; &#123;</span><br><span class="line">  const stats = await compiler(&apos;example.xlsx&apos;);</span><br><span class="line">  const output = stats.toJson().modules[0].source;</span><br><span class="line">  expect(output).toBe(`export default [&#123;&quot;sheet&quot;:&quot;sheet1&quot;,&quot;data&quot;:[&#123;&quot;id&quot;:&quot;1&quot;,&quot;name&quot;:&quot;Jack&quot;,&quot;age&quot;:&quot;20&quot;&#125;,&#123;&quot;id&quot;:&quot;2&quot;,&quot;name&quot;:&quot;Tom&quot;,&quot;age&quot;:&quot;18&quot;&#125;]&#125;, &#123;&quot;sheet&quot;:&quot;sheet2&quot;,&quot;data&quot;:[&#123;&quot;id&quot;:&quot;1&quot;,&quot;name&quot;:&quot;Jack&quot;,&quot;age&quot;:&quot;20&quot;&#125;,&#123;&quot;id&quot;:&quot;2&quot;,&quot;name&quot;:&quot;Tom&quot;,&quot;age&quot;:&quot;18&quot;&#125;]&#125;]`);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 <h3 id="thank-you"><a href="#thank-you" class="headerlink" title="thank you"></a>thank you</h3>
       
     </div>
@@ -437,6 +437,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/20/Css Grid Layout(一)/" rel="prev" title="CSS Grid Layout (一)">
+                CSS Grid Layout (一) <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -496,10 +500,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Inhaltsverzeichnis
+            Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Übersicht
+            Overview
           </li>
         </ul>
       
@@ -519,8 +523,8 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">4</span>
-                  <span class="site-state-item-name">Artikel</span>
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">posts</span>
                 </a>
               </div>
             
@@ -588,7 +592,7 @@
 </div>
 
 
-  <div class="powered-by">Erstellt mit  <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
 
 
 
