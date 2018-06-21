@@ -258,6 +258,153 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hupeip.github.io/2018/06/21/js排序算法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hupei">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Web前端">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/21/js排序算法/" itemprop="url">js排序算法</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-06-21T23:25:09+08:00">
+                2018-06-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2018/06/21/js排序算法/#SOHUCS" itemprop="discussionUrl">
+                  <span id="url::https://hupeip.github.io/2018/06/21/js排序算法/" class="cy_cmt_count" data-xid="2018/06/21/js排序算法/" itemprop="commentsCount" ></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="1-冒泡排序"><a href="#1-冒泡排序" class="headerlink" title="1.冒泡排序"></a>1.冒泡排序</h3><h4 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h4><p>依次比较相邻的两个值，如果后面的比前面的小，则将小的元素排到前面。依照这个规则进行多次并且递减的迭代，直到顺序正确。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">var examplearr=[4,24,15,37,55,71,28,30];</span><br><span class="line">function sort(arr)&#123;</span><br><span class="line">    for(i=0;i&lt;arr.length-1;i++)&#123;</span><br><span class="line">        for(j=0;j&lt;arr.length-1-i;j++)&#123;</span><br><span class="line">            if(arr[j]&gt;arr[j+1])&#123;</span><br><span class="line">                var temp=arr[j];</span><br><span class="line">                arr[j]=arr[j+1];</span><br><span class="line">                arr[j+1]=temp;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return arr;</span><br><span class="line">&#125;</span><br><span class="line">sort(examplearr);</span><br><span class="line">console.log(examplearr);</span><br></pre></td></tr></table></figure></p>
+<h4 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h4><p>使用两个循环</p>
+<p>当i=0的时候，执行内层循环，从j=0执行到j=6,这也就是第一遍排序，结果是将最大的数排到了最后。<br>当i=1的时候，再次执行内层循环，由于最大的数已经在最后了，没有必要去比较数组的最后两项，这也是为什么要用j&lt;arr.length-1-i</p>
+<p>按照这个规律，每次将剩下数组里面最大的一个数排到最后面，当执行到i=6时，就只需要比较第一项和第二项，交换之后就排序结束。</p>
+<p>算法分析</p>
+<p>最佳情况：T(n) = O(n)<br>最差情况：T(n) = O(n2)<br>平均情况：T(n) = O(n2)</p>
+<h3 id="2-选择排序"><a href="#2-选择排序" class="headerlink" title="2.选择排序"></a>2.选择排序</h3><h4 id="原理-1"><a href="#原理-1" class="headerlink" title="原理"></a>原理</h4><p>选择排序算法是一种原址比较算法。选择排序的大致思路是找到数据结构中的最小值，并将其放置在第一位，接着找到第二小的值放到第二位，以此类推。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">function selectSort(arr)&#123;</span><br><span class="line">    var len=arr.length;</span><br><span class="line">    var temp;</span><br><span class="line">    for(var i=0;i&lt;len-1;i++)&#123;</span><br><span class="line">        for(var j=i+1;j&lt;len;j++)&#123;</span><br><span class="line">            if(arr[j]&lt;arr[i])&#123;</span><br><span class="line">                temp=arr[j];</span><br><span class="line">                arr[j]=arr[i];</span><br><span class="line">                arr[i]=temp;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        i++;</span><br><span class="line">    &#125;</span><br><span class="line">    return arr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="解析-1"><a href="#解析-1" class="headerlink" title="解析"></a>解析</h4><p>把每一个数都与第一个数比较，如果小于第一个数，就把它们交换位置；这样一轮下来，最小的数就排到了最前面；重复n-1轮，就实现了选择排序</p>
+<p>选择排序和冒泡排序思想上有些相近</p>
+<p>算法分析</p>
+<p>最佳情况：T(n) = O(n2)<br>最差情况：T(n) = O(n2)<br>平均情况：T(n) = O(n2)</p>
+<h3 id="3-插入排序"><a href="#3-插入排序" class="headerlink" title="3.插入排序"></a>3.插入排序</h3><p>插入排序每次排一个数组项，以此方式构建最后的排序数组，假定第一项已经排序了，接着，它和第二项进行比较，第二项是应该待在原位还是插到第一项之前呢？这样头两项就已经正确排序，接着和第三项比较（它是该插入第一、第二还是第三的位置呢？）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">this.insertionSort = function()&#123;</span><br><span class="line">    var length = array.length,</span><br><span class="line">        j, temp;</span><br><span class="line">    for (var i=1; i&lt;length; i++)&#123;</span><br><span class="line">        j = i;</span><br><span class="line">        temp = array[i];</span><br><span class="line">        while (j&gt;0 &amp;&amp; array[j-1] &gt; temp&#123;</span><br><span class="line">            array[j] = array[j-1];</span><br><span class="line">            j--; </span><br><span class="line">        &#125;</span><br><span class="line">        array[j] = temp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<h4 id="排序过程大概如下："><a href="#排序过程大概如下：" class="headerlink" title="排序过程大概如下："></a>排序过程大概如下：</h4><p>从第一个元素开始，该元素可以认为已经被排序；<br>取出下一个元素，在已经排序的元素序列中从后向前扫描；<br>如果该元素（已排序）大于新元素，将该元素移到下一位置；<br>重复步骤3，直到找到已排序的元素小于或者等于新元素的位置；<br>将新元素插入到该位置后；<br>重复步骤2~5。 </p>
+<p>算法分析 </p>
+<p>最佳情况：输入数组按升序排列。T(n) = O(n)<br>最坏情况：输入数组按降序排列。T(n) = O(n2)<br>平均情况：T(n) = O(n2)</p>
+<p>未完待续。。。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://hupeip.github.io/2018/05/21/Vue组件之间通信方式总结/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1545,7 +1692,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">Artikel</span>
                 </a>
               </div>
