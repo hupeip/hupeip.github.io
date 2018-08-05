@@ -181,7 +181,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Startseite
+            Accueil
           </a>
         </li>
       
@@ -191,7 +191,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
             
-            Über
+            A propos
           </a>
         </li>
       
@@ -211,7 +211,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
-            Kategorien
+            Categories
           </a>
         </li>
       
@@ -221,7 +221,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archiv
+            Archives
           </a>
         </li>
       
@@ -244,6 +244,163 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hupeip.github.io/2018/08/05/web图片加载与渲染/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hupei">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Web前端">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/08/05/web图片加载与渲染/" itemprop="url">web图片加载与渲染时机</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posté le</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-05T23:44:15+08:00">
+                2018-08-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2018/08/05/web图片加载与渲染/#SOHUCS" itemprop="discussionUrl">
+                  <span id="url::https://hupeip.github.io/2018/08/05/web图片加载与渲染/" class="cy_cmt_count" data-xid="2018/08/05/web图片加载与渲染/" itemprop="commentsCount" ></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>管理好网页的图片资源,可以避免不必要的流量和提高用户体验。</p>
+<h3 id="浏览器的工作流程"><a href="#浏览器的工作流程" class="headerlink" title="浏览器的工作流程"></a>浏览器的工作流程</h3><p>要研究图片资源的加载，就不得不先熟悉浏览器的工作原理，下面这张图可以很清晰的说明<br><img src="https://user-images.githubusercontent.com/9698086/26868233-de8d0f06-4b9a-11e7-8b35-0c6bfbe9871b.png" alt="image"></p>
+<p>从上图可看出，浏览器加载一个HTML页面后进行如下操作(详细解释图片资源渲染)：  </p>
+<ul>
+<li>解析HTML(遇到img标签加载图片) —&gt; 构建DOM树</li>
+<li>加载css —&gt; 解析css（遇到背景图片链接不加载） —&gt; 构建css树</li>
+<li>加载js代码 —&gt; 执行js代码</li>
+<li>把DOM树和css树匹配构建渲染树（遍历DOM树时加载对应样式规则上的背景图片）</li>
+<li>计算元素位置进行布局</li>
+<li>绘制（开始渲染图片）</li>
+</ul>
+<h3 id="图片加载与渲染规则"><a href="#图片加载与渲染规则" class="headerlink" title="图片加载与渲染规则"></a>图片加载与渲染规则</h3><p>了解了浏览器的工作流程，现在来说说图片的加载和渲染，并不是所有的img标签图片和样式表背景图片都会加载  </p>
+<h4 id="重复图片"><a href="#重复图片" class="headerlink" title="重复图片"></a>重复图片</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">.img-bg &#123;</span><br><span class="line">    background: url(./demo.png);</span><br><span class="line">&#125;</span><br><span class="line">&lt;div class=&quot;img-bg&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;img src=&quot;./demo.png&quot;&gt;</span><br><span class="line">&lt;img src=&quot;./demo.png&quot;&gt;</span><br></pre></td></tr></table></figure>
+<p>页面中多个img标签或样式表中的背景图片图片路径是同一个，图片只加载一次。<br>原因：浏览器请求资源时，都会先判断是否有缓存，若有缓存且未过期则会从缓存中读取，不会再次请求。先加载的图片会存储到浏览器缓存中，后面再次请求同路径图片时会直接读取缓存中的图片。</p>
+<h4 id="设置display-none的图片"><a href="#设置display-none的图片" class="headerlink" title="设置display: none的图片"></a>设置display: none的图片</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;img src=&quot;./demo1.png&quot; style=&quot;display: none;&quot;&gt;</span><br></pre></td></tr></table></figure>
+<p>设置了display:none属性的元素，图片不会渲染出来，但会加载。<br>原因：在解析HTML时，遇到img标签就加载图片，DOM树和样式规则树匹配构建渲染树时，只会把可见元素和它对应的样式规则结合一起产出到渲染树  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;style&gt;</span><br><span class="line">.img &#123;</span><br><span class="line">    background: url(./demo.png);</span><br><span class="line">&#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;div style=&quot;display:none&quot;&gt;</span><br><span class="line">    &lt;img src=&quot;./demo1.png&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;img&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<p>如果父元素设置了display:none属性，那么子元素样式表中的背景图片不会渲染出来，也不会加载；而img标签的图片不会渲染出来，但会加载。<br>原因：在解析HTML时，遇到img标签就加载图片，当构建渲染树遇到了设置了display:none属性的不可见元素时，不会继续遍历不可见元素的子元素，因此不会加载该元素中子元素的背景图片</p>
+<h4 id="伪类的背景图片"><a href="#伪类的背景图片" class="headerlink" title="伪类的背景图片"></a>伪类的背景图片</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">.img &#123;</span><br><span class="line">    background: url(./domo.png);</span><br><span class="line">&#125;</span><br><span class="line">.img:hover&#123;</span><br><span class="line">    background: url(./demo1.png);</span><br><span class="line">&#125;</span><br><span class="line">&lt;div class=&quot;img&quot;&gt;&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<p>当触发伪类的时候，伪类样式上的背景图片才会加载。<br>原因：触发hover前，构建渲染树过程中，遍历DOM树时，该元素匹配的样式规则是无hover状态选择器.img的样式；触发hover后，因为.img:hover的优先级比较高，构建新的渲染树过程中，会加载伪类的背景图片。</p>
+<h4 id="不存在元素的背景图片"><a href="#不存在元素的背景图片" class="headerlink" title="不存在元素的背景图片"></a>不存在元素的背景图片</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">.img111 &#123;</span><br><span class="line">    background: url(./domo.png);</span><br><span class="line">&#125;</span><br><span class="line">&lt;div class=&quot;img&quot;&gt;&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<p>不存在元素的背景图片不会加载。<br>原因：不存在的元素不会产出到DOM树上，构建渲染树过程中遍历DOM树时无法遍历不存在的元素，因此不会加载图片，也不会产出到渲染树上。</p>
+<h3 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h3><h4 id="占位图"><a href="#占位图" class="headerlink" title="占位图"></a>占位图</h4><p>当使用样式表中的背景图片作为占位符时，要把背景图片转为base64格式。这是因为背景图片加载的顺序在img标签后面，背景图片可能会在img标签图片加载完成后才开始加载，达不到想要的效果。</p>
+<h4 id="预加载"><a href="#预加载" class="headerlink" title="预加载"></a>预加载</h4><ul>
+<li>使用上文讲到的，设置了display:none属性的元素，图片不会渲染出来，但会加载。把要预加载的图片加到设置了display:none的元素背景图或img标签里。</li>
+<li>在javascript创建img对象，把图片url设置到img对象的src属性里。</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
     
       
 
@@ -287,7 +444,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-06-21T23:25:09+08:00">
                 2018-06-21
@@ -434,7 +591,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-21T22:00:25+08:00">
                 2018-05-21
@@ -583,7 +740,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-22T21:32:38+08:00">
                 2018-04-22
@@ -738,7 +895,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-20T21:34:50+08:00">
                 2018-03-20
@@ -922,7 +1079,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-14T20:17:43+08:00">
                 2018-01-14
@@ -1093,7 +1250,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-19T21:34:03+08:00">
                 2017-12-19
@@ -1380,7 +1537,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-11-19T13:07:02+08:00">
                 2017-11-19
@@ -1548,7 +1705,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-11-19T00:10:47+08:00">
                 2017-11-19
@@ -1692,8 +1849,8 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">8</span>
-                  <span class="site-state-item-name">Artikel</span>
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">articles</span>
                 </a>
               </div>
             
@@ -1745,7 +1902,7 @@
 </div>
 
 
-  <div class="powered-by">Erstellt mit  <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
 
 
 
@@ -1753,7 +1910,7 @@
 
 
 
-  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.3</div>
+  <div class="theme-info">Thème &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.3</div>
 
 
 
