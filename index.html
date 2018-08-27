@@ -181,7 +181,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Accueil
+            Home
           </a>
         </li>
       
@@ -191,7 +191,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
             
-            A propos
+            About
           </a>
         </li>
       
@@ -258,6 +258,152 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hupeip.github.io/2018/08/27/es6 class深入了解/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hupei">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Web前端">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/08/27/es6 class深入了解/" itemprop="url">es6中class的深入了解</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-27T21:43:51+08:00">
+                2018-08-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2018/08/27/es6 class深入了解/#SOHUCS" itemprop="discussionUrl">
+                  <span id="url::https://hupeip.github.io/2018/08/27/es6 class深入了解/" class="cy_cmt_count" data-xid="2018/08/27/es6 class深入了解/" itemprop="commentsCount" ></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>相信es6中的class（类）对我们来说并不陌生，在我的工作中，也用到了ES6这一特性，虽然一直在使用，但是并没有去认真了解过它，于是做了一些功课，在这里跟大家分享自己的一些心得和看法。</p>
+<h3 id="比较"><a href="#比较" class="headerlink" title="比较"></a>比较</h3><p>在ES6以前，JS并没有给我们提供对类的支持，常用做法是用构造函数来模拟类的实现，通过将属性和方法定义在原型上将自身的属性共享给它的实例。<br>来看一个例子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">function Point(x, y) &#123;</span><br><span class="line">  this.x = x;</span><br><span class="line">  this.y = y;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Point.prototype.toString = function () &#123;</span><br><span class="line">  return &apos;(&apos; + this.x + &apos;, &apos; + this.y + &apos;)&apos;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">let p = new Point(1, 2);</span><br><span class="line">p.toString()</span><br></pre></td></tr></table></figure></p>
+<p>ES6 提供了更接近传统语言的写法，引入了 Class（类）这个概念。通过class关键字，可以定义类<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">//定义类</span><br><span class="line">class Point &#123;</span><br><span class="line">  constructor(x, y) &#123;</span><br><span class="line">    this.x = x;</span><br><span class="line">    this.y = y;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  toString() &#123;</span><br><span class="line">    return `( $&#123;this.x&#125;, $&#123;this.y&#125; )`;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">let p = new Point(1,2) </span><br><span class="line">p.toString()</span><br><span class="line">//(1,2)</span><br></pre></td></tr></table></figure></p>
+<p>解释：<br>constructor：构造方法，<br>this: 表示实例对象，<br>toString： 实例的方法  </p>
+<h3 id="constructor-NaN"><a href="#constructor-NaN" class="headerlink" title="constructor"></a>constructor</h3><p>constructor是类的默认方法，通过new 命令生成对象实例时，自动调用该方法，一个类必须有constructor方法，如果没有显示定义，会默认添加一个空的constructor方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">class Point&#123; &#125; //等同于</span><br><span class="line">class Point &#123; </span><br><span class="line">    constructor () &#123; &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>constructor方法默认返回实例对象（this）,如果我们指定返回另一个对象  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">class Person &#123; </span><br><span class="line">    constructor () &#123; </span><br><span class="line">        return Object.create(null); </span><br><span class="line">    &#125; </span><br><span class="line">&#125; </span><br><span class="line">let p = new Person() </span><br><span class="line">p instanceof Person //false </span><br><span class="line">// 实例 instanceof 构造函数 用来判断实例是否是构造函数的实例</span><br></pre></td></tr></table></figure>
+<p>ES6 的(class)类，完全可以看作构造函数的另一种写法, 类的数据类型就是函数，类本身就指向构造函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">typeof Point // &quot;function&quot;</span><br><span class="line">Point === Point.prototype.constructor // true</span><br></pre></td></tr></table></figure>
+<p>类必须使用new调用，否则会报错。<br>在定义类的时候，前面不需要加function关键字 </p>
+<h3 id="类的实例对象"><a href="#类的实例对象" class="headerlink" title="类的实例对象"></a>类的实例对象</h3><p>与 ES5 一样，实例的属性除非显式定义在其本身（即定义在this对象上），否则都是定义在原型上（即定义在class上）。  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">//定义类</span><br><span class="line">class Point &#123;</span><br><span class="line">  constructor(x, y) &#123;</span><br><span class="line">    this.x = x;</span><br><span class="line">    this.y = y;</span><br><span class="line">  &#125;</span><br><span class="line">  toString() &#123;</span><br><span class="line">    return `( $&#123;this.x&#125;, $&#123;this.y&#125; )`;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">let point = new Point(2, 3);</span><br><span class="line"></span><br><span class="line">point.toString() // (2, 3)</span><br><span class="line"></span><br><span class="line">point.hasOwnProperty(&apos;x&apos;) </span><br><span class="line">point.hasOwnProperty(&apos;y&apos;) </span><br><span class="line">point.hasOwnProperty(&apos;toString&apos;) </span><br><span class="line">point.__proto__.hasOwnProperty(&apos;toString&apos;)</span><br></pre></td></tr></table></figure>
+<h3 id="Class-的静态方法"><a href="#Class-的静态方法" class="headerlink" title="Class 的静态方法"></a>Class 的静态方法</h3><p>所有在类中定义的方法，都会被实例继承。如果在一个方法前，加上static关键字，就表示该方法不会被实例继承，而是直接通过类来调用，这就称为“静态方法”。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">class Foo &#123; </span><br><span class="line">    static classMethod() &#123; </span><br><span class="line">        return &apos;hello&apos;; </span><br><span class="line">    &#125; </span><br><span class="line">&#125; </span><br><span class="line">Foo.classMethod() // &apos;hello&apos; </span><br><span class="line">let foo = new Foo(); </span><br><span class="line">foo.classMethod() // TypeError: foo.classMethod is not a function</span><br></pre></td></tr></table></figure></p>
+<p>思考一下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">class Foo &#123;</span><br><span class="line">  static bar () &#123;</span><br><span class="line">    this.baz();</span><br><span class="line">  &#125;</span><br><span class="line">  static baz () &#123;</span><br><span class="line">    console.log(&apos;hello&apos;);</span><br><span class="line">  &#125;</span><br><span class="line">  baz () &#123;</span><br><span class="line">    console.log(&apos;world&apos;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Foo.bar() // ??</span><br></pre></td></tr></table></figure></p>
+<p>如果静态方法包含this关键字，这个this指的是类，而不是实例, 从这个例子还可以看出，静态方法可以与非静态方法重名。<br>所以这个例子最终打印出来的会是 hello.</p>
+<h3 id="Class-的静态属性和实例属性"><a href="#Class-的静态属性和实例属性" class="headerlink" title="Class 的静态属性和实例属性"></a>Class 的静态属性和实例属性</h3><h4 id="静态属性"><a href="#静态属性" class="headerlink" title="静态属性"></a>静态属性</h4><p>静态属性和静态方法都是一样，都是定义在类上，而不是实例对象上。<br>先来感受一下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">class Foo &#123;</span><br><span class="line">  static prop = 1;</span><br><span class="line">&#125;</span><br><span class="line">Foo.prop // 1</span><br></pre></td></tr></table></figure></p>
+<h4 id="类的实例属性"><a href="#类的实例属性" class="headerlink" title="类的实例属性"></a>类的实例属性</h4>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://hupeip.github.io/2018/08/05/web图片加载与渲染/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -287,7 +433,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posté le</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-05T23:44:15+08:00">
                 2018-08-05
@@ -444,7 +590,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posté le</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-06-21T23:25:09+08:00">
                 2018-06-21
@@ -591,7 +737,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posté le</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-21T22:00:25+08:00">
                 2018-05-21
@@ -740,7 +886,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posté le</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-22T21:32:38+08:00">
                 2018-04-22
@@ -895,7 +1041,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posté le</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-20T21:34:50+08:00">
                 2018-03-20
@@ -1079,7 +1225,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posté le</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-14T20:17:43+08:00">
                 2018-01-14
@@ -1250,7 +1396,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posté le</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-19T21:34:03+08:00">
                 2017-12-19
@@ -1537,7 +1683,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posté le</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-11-19T13:07:02+08:00">
                 2017-11-19
@@ -1705,7 +1851,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posté le</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-11-19T00:10:47+08:00">
                 2017-11-19
@@ -1849,8 +1995,8 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">9</span>
-                  <span class="site-state-item-name">articles</span>
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">posts</span>
                 </a>
               </div>
             
@@ -1910,7 +2056,7 @@
 
 
 
-  <div class="theme-info">Thème &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.3</div>
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.3</div>
 
 
 
