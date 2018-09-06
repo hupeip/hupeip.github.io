@@ -85,7 +85,7 @@
 <meta property="og:url" content="https://hupeip.github.io/2018/08/27/es6 class深入了解/index.html">
 <meta property="og:site_name" content="Web前端">
 <meta property="og:description" content="相信es6中的class（类）对我们来说并不陌生，在我的工作中，也用到了ES6这一特性，虽然一直在使用，但是并没有去认真了解过它，于是做了一些功课，在这里跟大家分享自己的一些心得和看法。 比较在ES6以前，JS并没有给我们提供对类的支持，常用做法是用构造函数来模拟类的实现，通过将属性和方法定义在原型上将自身的属性共享给它的实例。来看一个例子：1234567891011function Point(">
-<meta property="og:updated_time" content="2018-09-04T15:47:55.000Z">
+<meta property="og:updated_time" content="2018-09-06T08:51:44.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="es6中class的深入了解">
 <meta name="twitter:description" content="相信es6中的class（类）对我们来说并不陌生，在我的工作中，也用到了ES6这一特性，虽然一直在使用，但是并没有去认真了解过它，于是做了一些功课，在这里跟大家分享自己的一些心得和看法。 比较在ES6以前，JS并没有给我们提供对类的支持，常用做法是用构造函数来模拟类的实现，通过将属性和方法定义在原型上将自身的属性共享给它的实例。来看一个例子：1234567891011function Point(">
@@ -184,7 +184,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Home
+            Startseite
           </a>
         </li>
       
@@ -194,7 +194,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
             
-            About
+            Über
           </a>
         </li>
       
@@ -214,7 +214,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
-            Categories
+            Kategorien
           </a>
         </li>
       
@@ -224,7 +224,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archives
+            Archiv
           </a>
         </li>
       
@@ -288,7 +288,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-27T21:43:51+08:00">
                 2018-08-27
@@ -360,6 +360,10 @@
 <p>以前我们定义实例属性，只能写在constructor方法里面，像下面这样<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">class Index extends React.Component &#123;</span><br><span class="line">  constructor(props) &#123;</span><br><span class="line">    super(props);</span><br><span class="line">    this.state = &#123;</span><br><span class="line">      count: 0</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <h3 id="类的继承"><a href="#类的继承" class="headerlink" title="类的继承"></a>类的继承</h3><p>Class 可以通过extends关键字实现继承，这比 ES5 的通过修改原型链实现继承，要清晰和方便很多。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">// 父类</span><br><span class="line">class Point &#123;</span><br><span class="line">  constructor(x, y) &#123;</span><br><span class="line">    this.x = x;</span><br><span class="line">    this.y = y;</span><br><span class="line">  &#125;</span><br><span class="line">  static hello() &#123;</span><br><span class="line">    console.log(&apos;hello world&apos;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 子类</span><br><span class="line">class ColorPoint extends Point &#123;</span><br><span class="line">  constructor(x, y, color) &#123;</span><br><span class="line">    this.color = color; // ReferenceError</span><br><span class="line">    super(x, y);  // 调用父类的constructor(x, y)</span><br><span class="line">    this.color = color; // 正确</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>子类必须在constructor方法中调用super方法，否则新建实例时会报错。这是因为子类自己的this对象，必须先通过父类的构造函数完成塑造，得到与父类同样的实例属性和方法，然后再对其进行加工，加上子类自己的实例属性和方法。如果不调用super方法，子类就得不到this对象。<br>父类的静态方法，也会被子类继承</p>
+<h3 id="类的私有属性和私有方法"><a href="#类的私有属性和私有方法" class="headerlink" title="类的私有属性和私有方法"></a>类的私有属性和私有方法</h3><h4 id="私有属性"><a href="#私有属性" class="headerlink" title="私有属性"></a>私有属性</h4><p>ES6 不支持私有属性。目前，有一个提案，为class加了私有属性。方法是在属性名之前，使用#表示<br>之所以要引入一个新的前缀#表示私有属性，是因为js没有private关键字<br>另外，Ruby 语言使用@表示私有属性，ES6 没有用@符号而使用#，是因为@已经被留给了 Decorator</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">class Point &#123;</span><br><span class="line">  #x;</span><br><span class="line">  constructor(x = 0) &#123;</span><br><span class="line">  #x = +x; // 写成 this.#x 亦可</span><br><span class="line">  &#125;</span><br><span class="line">  get x() &#123; return #x &#125;</span><br><span class="line">  set x(value) &#123; #x = +value &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="私有方法"><a href="#私有方法" class="headerlink" title="私有方法"></a>私有方法</h4><p>私有方法是常见需求，但 ES6 不提供，只能通过其他方法模拟实现<br>第一种方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">class Widget &#123;</span><br><span class="line">  // 公有方法</span><br><span class="line">  foo (baz) &#123;</span><br><span class="line">  this._bar(baz);</span><br><span class="line">  &#125;</span><br><span class="line">  // 私有方法</span><br><span class="line">  _bar(baz) &#123;</span><br><span class="line">  return this.snaf = baz;</span><br><span class="line">  &#125;</span><br><span class="line">  // ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>第二种方法<br>还有一种方法是利用Symbol值的唯一性，将私有方法的名字命名为一个Symbol值<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">const bar = Symbol(&apos;bar&apos;);</span><br><span class="line">const snaf = Symbol(&apos;snaf&apos;);</span><br><span class="line">export default class myClass&#123;</span><br><span class="line">  // 公有方法</span><br><span class="line">  foo(baz) &#123;</span><br><span class="line">    this[bar](baz);</span><br><span class="line">  &#125;</span><br><span class="line">  // 私有方法</span><br><span class="line">  [bar](baz) &#123;</span><br><span class="line">    return this[snaf] = baz;</span><br><span class="line">  &#125;</span><br><span class="line">  // ...</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -476,10 +480,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
+            Inhaltsverzeichnis
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
+            Übersicht
           </li>
         </ul>
       
@@ -500,7 +504,7 @@
                 <a href="/archives/">
               
                   <span class="site-state-item-count">10</span>
-                  <span class="site-state-item-name">posts</span>
+                  <span class="site-state-item-name">Artikel</span>
                 </a>
               </div>
             
@@ -538,7 +542,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#比较"><span class="nav-number">1.</span> <span class="nav-text">比较</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#constructor-NaN"><span class="nav-number">2.</span> <span class="nav-text">constructor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#this-指向"><span class="nav-number">3.</span> <span class="nav-text">this 指向</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类的实例对象"><span class="nav-number">4.</span> <span class="nav-text">类的实例对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Class-的静态方法"><span class="nav-number">5.</span> <span class="nav-text">Class 的静态方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Class-的静态属性和实例属性"><span class="nav-number">6.</span> <span class="nav-text">Class 的静态属性和实例属性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#静态属性"><span class="nav-number">6.1.</span> <span class="nav-text">静态属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#类的实例属性"><span class="nav-number">6.2.</span> <span class="nav-text">类的实例属性</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类的继承"><span class="nav-number">7.</span> <span class="nav-text">类的继承</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#比较"><span class="nav-number">1.</span> <span class="nav-text">比较</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#constructor-NaN"><span class="nav-number">2.</span> <span class="nav-text">constructor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#this-指向"><span class="nav-number">3.</span> <span class="nav-text">this 指向</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类的实例对象"><span class="nav-number">4.</span> <span class="nav-text">类的实例对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Class-的静态方法"><span class="nav-number">5.</span> <span class="nav-text">Class 的静态方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Class-的静态属性和实例属性"><span class="nav-number">6.</span> <span class="nav-text">Class 的静态属性和实例属性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#静态属性"><span class="nav-number">6.1.</span> <span class="nav-text">静态属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#类的实例属性"><span class="nav-number">6.2.</span> <span class="nav-text">类的实例属性</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类的继承"><span class="nav-number">7.</span> <span class="nav-text">类的继承</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类的私有属性和私有方法"><span class="nav-number">8.</span> <span class="nav-text">类的私有属性和私有方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#私有属性"><span class="nav-number">8.1.</span> <span class="nav-text">私有属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#私有方法"><span class="nav-number">8.2.</span> <span class="nav-text">私有方法</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -568,7 +572,7 @@
 </div>
 
 
-  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+  <div class="powered-by">Erstellt mit  <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
 
 
 
