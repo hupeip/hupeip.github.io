@@ -258,6 +258,156 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hupeip.github.io/2018/10/08/axios拦截器/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hupei">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Web前端">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/08/axios拦截器/" itemprop="url">axios拦截器</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-08T22:16:25+08:00">
+                2018-10-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2018/10/08/axios拦截器/#SOHUCS" itemprop="discussionUrl">
+                  <span id="url::https://hupeip.github.io/2018/10/08/axios拦截器/" class="cy_cmt_count" data-xid="2018/10/08/axios拦截器/" itemprop="commentsCount" ></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>页面发送http请求，很多情况我们要对请求和其响应进行特定的处理；如果请求数非常多，单独对每一个请求进行处理会变得非常麻烦，程序的优雅性也会大打折扣。好在强大的axios为开发者提供了这样一个API：拦截器。拦截器分为 请求（request）拦截器和 响应（response）拦截器。</p>
+<h3 id="axios拦截器简单介绍"><a href="#axios拦截器简单介绍" class="headerlink" title="axios拦截器简单介绍"></a>axios拦截器简单介绍</h3><h4 id="请求拦截器"><a href="#请求拦截器" class="headerlink" title="请求拦截器"></a>请求拦截器</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">axios.interceptors.request.use(function (config) &#123;</span><br><span class="line">    // 在发起请求请做一些业务处理</span><br><span class="line">    return config;</span><br><span class="line">  &#125;, function (error) &#123;</span><br><span class="line">    // 对请求失败做处理</span><br><span class="line">    return Promise.reject(error);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+<h4 id="响应拦截器"><a href="#响应拦截器" class="headerlink" title="响应拦截器"></a>响应拦截器</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">axios.interceptors.response.use(function (response) &#123;</span><br><span class="line">    // 对响应数据做处理</span><br><span class="line">    return response;</span><br><span class="line">  &#125;, function (error) &#123;</span><br><span class="line">    // 对响应错误做处理</span><br><span class="line">    return Promise.reject(error);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="vue添加axios拦截器"><a href="#vue添加axios拦截器" class="headerlink" title="vue添加axios拦截器"></a>vue添加axios拦截器</h3><h4 id="安装-axios"><a href="#安装-axios" class="headerlink" title="安装 axios"></a>安装 axios</h4><p>npm install axios –save-dev</p>
+<h4 id="新建文件-axios-js"><a href="#新建文件-axios-js" class="headerlink" title="新建文件 axios.js"></a>新建文件 axios.js</h4><p>开始统一封装axios， 首先引入axios、qs依赖</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">import axios from &quot;axios&quot;;</span><br><span class="line">import qs from &quot;qs&quot;;</span><br></pre></td></tr></table></figure>
+<p>然后创建一个axios实例，这个process.env.BASE_URL在config/dev.evn.js、prod.evn.js里面进行配置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/****** 创建axios实例 ******/</span><br><span class="line">const service = axios.create(&#123;</span><br><span class="line">    baseURL: process.env.BASE_URL,  // api的base_url</span><br><span class="line">    timeout: 5000  // 请求超时时间</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<h4 id="使用request拦截器对axios请求配置做统一处理"><a href="#使用request拦截器对axios请求配置做统一处理" class="headerlink" title="使用request拦截器对axios请求配置做统一处理"></a>使用request拦截器对axios请求配置做统一处理</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">service.interceptors.request.use(config =&gt; &#123;    </span><br><span class="line">    app.$vux.loading.show(&#123;        </span><br><span class="line">        text: &apos;数据加载中……&apos;    </span><br><span class="line">    &#125;);     </span><br><span class="line">    config.method === &apos;post&apos;        </span><br><span class="line">        ? config.data = qs.stringify(&#123;...config.data&#125;)        </span><br><span class="line">        : config.params = &#123;...config.params&#125;;    </span><br><span class="line">    config.headers[&apos;Content-Type&apos;] = &apos;application/x-www-form-urlencoded&apos;;     </span><br><span class="line">    return config;</span><br><span class="line">    &#125;, error =&gt; &#123;  //请求错误处理   </span><br><span class="line">        app.$vux.toast.show(&#123;        </span><br><span class="line">            type: &apos;warn&apos;,        </span><br><span class="line">            text: error   </span><br><span class="line">        &#125;);    </span><br><span class="line">        Promise.reject(error)</span><br><span class="line">    &#125;</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<h4 id="对response做统一处理"><a href="#对response做统一处理" class="headerlink" title="对response做统一处理"></a>对response做统一处理</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">service.interceptors.response.use(    </span><br><span class="line">    response =&gt; &#123;  //成功请求到数据        </span><br><span class="line">        app.$vux.loading.hide();        </span><br><span class="line">        //这里根据后端提供的数据进行对应的处理        </span><br><span class="line">        if (response.data.result === &apos;TRUE&apos;) &#123;            </span><br><span class="line">            return response.data;        </span><br><span class="line">        &#125; else &#123;            </span><br><span class="line">            app.$vux.toast.show(&#123;  </span><br><span class="line">                //常规错误处理                </span><br><span class="line">                type: &apos;warn&apos;,                </span><br><span class="line">                text: response.data.data.msg            </span><br><span class="line">            &#125;);        </span><br><span class="line">        &#125;    </span><br><span class="line">    &#125;,    </span><br><span class="line">    error =&gt; &#123;  //响应错误处理console.log(&apos;error&apos;);        </span><br><span class="line">        console.log(error);        </span><br><span class="line">        console.log(JSON.stringify(error));         </span><br><span class="line">        let text = JSON.parse(JSON.stringify(error)).response.status === 404            </span><br><span class="line">            ? &apos;404&apos;            </span><br><span class="line">            : &apos;网络异常，请重试&apos;;        </span><br><span class="line">        app.$vux.toast.show(&#123;            </span><br><span class="line">            type: &apos;warn&apos;,            </span><br><span class="line">            text: text        </span><br><span class="line">        &#125;);         </span><br><span class="line">        return Promise.reject(error)   </span><br><span class="line">    &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<h4 id="将axios实例暴露出去"><a href="#将axios实例暴露出去" class="headerlink" title="将axios实例暴露出去"></a>将axios实例暴露出去</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export default service;</span><br></pre></td></tr></table></figure>
+<p>这样一个简单的拦截器就完成了</p>
+<h4 id="在main-js中进行引用，并配置一个别名（-ajax）来进行调用"><a href="#在main-js中进行引用，并配置一个别名（-ajax）来进行调用" class="headerlink" title="在main.js中进行引用，并配置一个别名（$ajax）来进行调用"></a>在main.js中进行引用，并配置一个别名（$ajax）来进行调用</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import axios from &apos;axios&apos;</span><br><span class="line">import &apos;../axios.js&apos;    //axios.js的路径</span><br><span class="line"></span><br><span class="line">Vue.prototype.$ajax = axios</span><br></pre></td></tr></table></figure>
+<h4 id="应用：一个简单的登录接口"><a href="#应用：一个简单的登录接口" class="headerlink" title="应用：一个简单的登录接口"></a>应用：一个简单的登录接口</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">this.$ajax(&#123;</span><br><span class="line">　　method: &apos;post&apos;,</span><br><span class="line">　　url: &apos;/login&apos;,</span><br><span class="line">　　data: &#123;</span><br><span class="line">　　　　&apos;userName&apos;: &apos;haha&apos;,</span><br><span class="line">　　　　&apos;password&apos;: &apos;123456&apos;</span><br><span class="line">　　&#125;</span><br><span class="line">&#125;).then(res =&gt; &#123;</span><br><span class="line">　　console.log(res)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><p>eg: axios拦截器对路由进行拦截</p>
+<h4 id="1-路由拦截"><a href="#1-路由拦截" class="headerlink" title="1.路由拦截"></a>1.路由拦截</h4><p>在定义路由的时候就需要多添加一个自定义字段requireAuth，用于判断该路由的访问是否需要登录。如果用户已经登录，则顺利进入路由，否则就进入登录页面。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">const routes = [</span><br><span class="line">    &#123;</span><br><span class="line">        path: &apos;/&apos;,</span><br><span class="line">        name: &apos;/&apos;,</span><br><span class="line">        component: Index</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        path: &apos;/repository&apos;,</span><br><span class="line">        name: &apos;repository&apos;,</span><br><span class="line">        meta: &#123;</span><br><span class="line">            requireAuth: true,  // 添加该字段，表示进入这个路由是需要登录的</span><br><span class="line">        &#125;,</span><br><span class="line">        component: Repository</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        path: &apos;/login&apos;,</span><br><span class="line">        name: &apos;login&apos;,</span><br><span class="line">        component: Login</span><br><span class="line">    &#125;</span><br><span class="line">];</span><br></pre></td></tr></table></figure></p>
+<p>定义完路由后，我们主要是利用vue-router提供的钩子函数beforeEach()对路由进行判断。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">router.beforeEach((to, from, next) =&gt; &#123;</span><br><span class="line">    if (to.meta.requireAuth) &#123;  // 判断该路由是否需要登录权限</span><br><span class="line">        if (token) &#123;  // 判断当前的token是否存在</span><br><span class="line">            next();</span><br><span class="line">        &#125;</span><br><span class="line">        else &#123;</span><br><span class="line">            next(&#123;</span><br><span class="line">                path: &apos;/login&apos;,</span><br><span class="line">                query: &#123;redirect: to.fullPath&#125;  // 将跳转的路由path作为参数，登录成功后跳转到该路由</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    else &#123;</span><br><span class="line">        next();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>to.meta中是我们自定义的数据，其中就包括我们刚刚定义的requireAuth字段<br>通过这个字段来判断该路由是否需要登录权限<br>需要的话，同时当前应用不存在token，则跳转到登录页面，进行登录。登录成功后跳转到目标路由。 </p>
+<p>这种方式只是简单的前端路由控制，并不能阻止用户访问，假设有一种情况：当前token失效了，但是token依然保存在本地。这时候你去访问需要登录权限的路由时，实际上应该让用户重新登录。这时候就需要结合 http 拦截器 + 后端接口返回的http 状态码来判断。</p>
+<h4 id="2-拦截器"><a href="#2-拦截器" class="headerlink" title="2.拦截器"></a>2.拦截器</h4><p>要想统一处理所有http请求和响应，就得用上 axios 的拦截器。通过配置http response inteceptor，当后端接口返回401 Unauthorized（未授权），让用户重新登录。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">// http request 拦截器</span><br><span class="line">axios.interceptors.request.use(</span><br><span class="line">    config =&gt; &#123;</span><br><span class="line">        if (stoken) &#123;  // 判断是否存在token，如果存在的话，则每个http header都加上token</span><br><span class="line">            config.headers.Authorization = `token $&#123;store.state.token&#125;`;</span><br><span class="line">        &#125;</span><br><span class="line">        return config;</span><br><span class="line">    &#125;,</span><br><span class="line">    err =&gt; &#123;</span><br><span class="line">        return Promise.reject(err);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">// http response 拦截器</span><br><span class="line">axios.interceptors.response.use(</span><br><span class="line">    response =&gt; &#123;</span><br><span class="line">        return response;</span><br><span class="line">    &#125;,</span><br><span class="line">    error =&gt; &#123;</span><br><span class="line">        if (error.response) &#123;</span><br><span class="line">            switch (error.response.status) &#123;</span><br><span class="line">                case 401:</span><br><span class="line">                    // 返回 401 清除token信息并跳转到登录页面</span><br><span class="line">                    </span><br><span class="line">                    router.replace(&#123;</span><br><span class="line">                        path: &apos;login&apos;,</span><br><span class="line">                        query: &#123;redirect: router.currentRoute.fullPath&#125;</span><br><span class="line">                    &#125;)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return Promise.reject(error.response.data)   // 返回接口返回的错误信息</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://hupeip.github.io/2018/08/27/es6 class深入了解/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1818,148 +1968,13 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://hupeip.github.io/2017/11/19/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="hupei">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Web前端">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/19/hello-world/" itemprop="url">Hello</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-11-19T00:10:47+08:00">
-                2017-11-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-comment-o"></i>
-              </span>
-              
-                <a href="/2017/11/19/hello-world/#SOHUCS" itemprop="discussionUrl">
-                  <span id="url::https://hupeip.github.io/2017/11/19/hello-world/" class="cy_cmt_count" data-xid="2017/11/19/hello-world/" itemprop="commentsCount" ></span>
-                </a>
-              
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
 
 
           </div>
@@ -2004,7 +2019,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">Artikel</span>
                 </a>
               </div>
