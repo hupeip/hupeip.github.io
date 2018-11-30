@@ -85,7 +85,7 @@
 <meta property="og:url" content="https://hupeip.github.io/2018/11/30/Vue中computed计算属性原理/index.html">
 <meta property="og:site_name" content="Web前端">
 <meta property="og:description" content="Computed 计算属性是 Vue 中常用的一个功能，但你理解它是怎么工作的吗？ 官网的例子：123456789101112131415161718&amp;lt;div id=&amp;quot;example&amp;quot;&amp;gt;  &amp;lt;p&amp;gt;Original message: &amp;quot;&amp;#123;&amp;#123; message &amp;#125;&amp;#125;&amp;quot;&amp;lt;/p&amp;gt;  &amp;lt;p">
-<meta property="og:updated_time" content="2018-11-30T13:41:24.000Z">
+<meta property="og:updated_time" content="2018-11-30T13:47:41.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Vue中computed计算属性原理">
 <meta name="twitter:description" content="Computed 计算属性是 Vue 中常用的一个功能，但你理解它是怎么工作的吗？ 官网的例子：123456789101112131415161718&amp;lt;div id=&amp;quot;example&amp;quot;&amp;gt;  &amp;lt;p&amp;gt;Original message: &amp;quot;&amp;#123;&amp;#123; message &amp;#125;&amp;#125;&amp;quot;&amp;lt;/p&amp;gt;  &amp;lt;p">
@@ -184,7 +184,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Home
+            Startseite
           </a>
         </li>
       
@@ -194,7 +194,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
             
-            About
+            Über
           </a>
         </li>
       
@@ -214,7 +214,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
-            Categories
+            Kategorien
           </a>
         </li>
       
@@ -224,7 +224,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archives
+            Archiv
           </a>
         </li>
       
@@ -288,7 +288,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-30T21:31:06+08:00">
                 2018-11-30
@@ -347,7 +347,50 @@
 <h3 id="Task"><a href="#Task" class="headerlink" title="Task"></a>Task</h3><p>分析依赖收集实现原理，分析动态计算实现原理。  </p>
 <h3 id="Action"><a href="#Action" class="headerlink" title="Action"></a>Action</h3><h4 id="data-属性初始化-getter-setter"><a href="#data-属性初始化-getter-setter" class="headerlink" title="data 属性初始化 getter setter"></a>data 属性初始化 getter setter</h4><p>(Obeject.defineProperty是Object的一个方法，第一个参数是对象名称，第二个参数是要设置的属性名，第三个参数是一个对象，它可以设置这个属性是否可修改、可写等</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">Object.defineProperty(obj, key, &#123;</span><br><span class="line">    enumerable: true,</span><br><span class="line">    configurable: true,</span><br><span class="line">    get: function reactiveGetter () &#123;</span><br><span class="line">        const value = getter ? getter.call(obj) : val</span><br><span class="line">        // 判断是否处于依赖收集状态</span><br><span class="line">        if (Dep.target) &#123;</span><br><span class="line">        // 建立依赖关系</span><br><span class="line">        dep.depend()</span><br><span class="line">        ...</span><br><span class="line">        &#125;</span><br><span class="line">        return value</span><br><span class="line">    &#125;,</span><br><span class="line">    set: function reactiveSetter (newVal) &#123;</span><br><span class="line">        ...</span><br><span class="line">        // 依赖发生变化，通知到计算属性重新计算</span><br><span class="line">        dep.notify()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<h4 id="computed-计算属性初始化"><a href="#computed-计算属性初始化" class="headerlink" title="computed 计算属性初始化"></a>computed 计算属性初始化</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">// 初始化计算属性</span><br><span class="line">function initComputed (vm: Component, computed: Object) &#123;</span><br><span class="line">    ...</span><br><span class="line">    // 遍历 computed 计算属性</span><br><span class="line">    for (const key in computed) &#123;</span><br><span class="line">        ...</span><br><span class="line">        // 创建 Watcher 实例</span><br><span class="line">        // create internal watcher for the computed property.</span><br><span class="line">        watchers[key] = new Watcher(vm, getter || noop, noop, computedWatcherOptions)</span><br><span class="line"></span><br><span class="line">        // 创建属性 vm.reversedMessage，并将提供的函数将用作属性 vm.reversedMessage 的 getter，</span><br><span class="line">        // 最终 computed 与 data 会一起混合到 vm 下，所以当 computed 与 data 存在重名属性时会抛出警告</span><br><span class="line">        defineComputed(vm, key, userDef)</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export function defineComputed (target: any, key: string, userDef: Object | Function) &#123;</span><br><span class="line">    ...</span><br><span class="line">    // 创建 get set 方法</span><br><span class="line">    sharedPropertyDefinition.get = createComputedGetter(key)</span><br><span class="line">    sharedPropertyDefinition.set = noop</span><br><span class="line">    ...</span><br><span class="line">    // 创建属性 vm.reversedMessage，并初始化 getter setter</span><br><span class="line">    Object.defineProperty(target, key, sharedPropertyDefinition)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function createComputedGetter (key) &#123;</span><br><span class="line">    return function computedGetter () &#123;</span><br><span class="line">        const watcher = this._computedWatchers &amp;&amp; this._computedWatchers[key]</span><br><span class="line">        if (watcher) &#123;</span><br><span class="line">        if (watcher.dirty) &#123;</span><br><span class="line">            // watcher 暴露 evaluate 方法用于取值操作</span><br><span class="line">            watcher.evaluate()</span><br><span class="line">        &#125;</span><br><span class="line">        // 同第1步，判断是否处于依赖收集状态</span><br><span class="line">        if (Dep.target) &#123;</span><br><span class="line">            watcher.depend()</span><br><span class="line">        &#125;</span><br><span class="line">        return watcher.value</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="computed-计算属性初始化"><a href="#computed-计算属性初始化" class="headerlink" title="computed 计算属性初始化"></a>computed 计算属性初始化</h4><pre><code>// 初始化计算属性
+function initComputed (vm: Component, computed: Object) {
+    ...
+    // 遍历 computed 计算属性
+    for (const key in computed) {
+        ...
+        // 创建 Watcher 实例
+        // create internal watcher for the computed property.
+        watchers[key] = new Watcher(vm, getter || noop, noop, computedWatcherOptions)
+
+        // 创建属性 vm.reversedMessage，并将提供的函数将用作属性 vm.reversedMessage 的 getter，
+        // 最终 computed 与 data 会一起混合到 vm 下，所以当 computed 与 data 存在重名属性时会抛出警告
+        defineComputed(vm, key, userDef)
+        ...
+    }
+}
+
+export function defineComputed (target: any, key: string, userDef: Object | Function) {
+    ...
+    // 创建 get set 方法
+    sharedPropertyDefinition.get = createComputedGetter(key)
+    sharedPropertyDefinition.set = noop
+    ...
+    // 创建属性 vm.reversedMessage，并初始化 getter setter
+    Object.defineProperty(target, key, sharedPropertyDefinition)
+    }
+
+    function createComputedGetter (key) {
+    return function computedGetter () {
+        const watcher = this._computedWatchers &amp;&amp; this._computedWatchers[key]
+        if (watcher) {
+        if (watcher.dirty) {
+            // watcher 暴露 evaluate 方法用于取值操作
+            watcher.evaluate()
+        }
+        // 同第1步，判断是否处于依赖收集状态
+        if (Dep.target) {
+            watcher.depend()
+        }
+        return watcher.value
+        }
+    }
+}
+</code></pre>
       
     </div>
     
@@ -463,10 +506,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
+            Inhaltsverzeichnis
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
+            Übersicht
           </li>
         </ul>
       
@@ -487,7 +530,7 @@
                 <a href="/archives/">
               
                   <span class="site-state-item-count">13</span>
-                  <span class="site-state-item-name">posts</span>
+                  <span class="site-state-item-name">Artikel</span>
                 </a>
               </div>
             
@@ -555,7 +598,7 @@
 </div>
 
 
-  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+  <div class="powered-by">Erstellt mit  <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
 
 
 
